@@ -39,7 +39,7 @@ DDEV copies it into the container as `~/.zshrc`. It conditionally sources these 
 
 ### Global user configuration
 
-A user may create:
+A user may create the following file on their host computer to provide global Zsh configuration for all DDEV projects that have this add-on installed:
 
 ```text
 ~/.ddev/homeadditions/.zshrc.global
