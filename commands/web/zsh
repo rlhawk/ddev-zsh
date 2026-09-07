@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#ddev-generated
+## Description: Open an interactive login Zsh shell
+## Usage: zsh [zsh-options]
+set -eu
+exec zsh -l "$@"

@@ -1,0 +1,7 @@
+#ddev-generated
+services:
+  web:
+    volumes:
+      - type: bind
+        source: "${DDEV_APPROOT}/.ddev/.zsh"
+        target: /mnt/ddev-zsh

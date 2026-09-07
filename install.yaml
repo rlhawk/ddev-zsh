@@ -1,0 +1,27 @@
+name: ddev-zsh
+ddev_version_constraint: ">= v1.24.0"
+
+pre_install_actions:
+  - |
+    #ddev-description: Create project-local Zsh state
+    mkdir -p "${DDEV_APPROOT}/.ddev/.zsh"
+
+project_files:
+  - config.zsh.yaml
+  - docker-compose.zsh.yaml
+  - web-build/Dockerfile.zsh
+  - commands/web/zsh
+  - commands/web/zsh-doctor
+  - homeadditions/.zshrc
+  - .zsh/.gitignore
+
+global_files: []
+
+post_install_actions:
+  - |
+    #ddev-description: Display next steps
+    echo "ddev-zsh installed. Run 'ddev restart', then 'ddev zsh-doctor' and 'ddev zsh'."
+    echo "Optional global customization: ~/.ddev/homeadditions/.zshrc.global"
+    echo "Optional project customization: ${DDEV_APPROOT}/.ddev/homeadditions/.zshrc.project"
+
+removal_actions: []
