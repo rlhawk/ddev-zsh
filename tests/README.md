@@ -27,7 +27,3 @@ From the repository root:
 ```bash
 bats tests/test.bats
 ```
-
-The release-install test uses `rlhawk/ddev-zsh`. During early development, you
-can temporarily skip that test with a Bats filter if no compatible release has
-yet been published.
