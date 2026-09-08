@@ -10,7 +10,7 @@ A DDEV add-on that provides a customizable Zsh environment with Starship, Antido
 - Starship at `/usr/local/bin/starship`
 - Oh My Zsh at `/usr/local/share/oh-my-zsh`
 - `ddev zsh` and `ddev zsh-doctor`
-- Project-local persistent history at `.ddev/.zsh/history`
+- Project-local persistent history at `.ddev/.zsh/.zsh_history`
 
 ## Install
 
@@ -80,7 +80,7 @@ export PROJECT_ENV=local
 
 ## History
 
-The add-on creates `.ddev/.zsh`, bind-mounts it at `/mnt/ddev-zsh`, and sets `HISTFILE=/mnt/ddev-zsh/history`. Its nested `.gitignore` ignores itself and all generated state. Nothing in `.ddev/.zsh` needs to be committed.
+The add-on creates `.ddev/.zsh`, bind-mounts it at `/mnt/ddev-zsh`, and sets `HISTFILE=/mnt/ddev-zsh/.zsh_history`. Its nested `.gitignore` ignores itself and all generated state. Nothing in `.ddev/.zsh` needs to be committed.
 
 Be aware that `git clean -xfd` can delete this ignored directory and its history.
 
