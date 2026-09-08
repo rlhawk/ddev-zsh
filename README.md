@@ -1,3 +1,8 @@
+[![add-on registry](https://img.shields.io/badge/DDEV-Add--on_Registry-blue)](https://addons.ddev.com)
+[![tests](https://github.com/rlhawk/ddev-zsh/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/rlhawk/ddev-zsh/actions/workflows/tests.yml?query=branch%3Amain)
+[![last commit](https://img.shields.io/github/last-commit/rlhawk/ddev-zsh)](https://github.com/rlhawk/ddev-zsh/commits)
+[![release](https://img.shields.io/github/v/release/rlhawk/ddev-zsh)](https://github.com/rlhawk/ddev-zsh/releases/latest)
+
 # ddev-zsh
 
 A DDEV add-on that provides a customizable Zsh environment with Starship, Antidote, Oh My Zsh, Fuzzy Finder, and persistent project-local shell state.
