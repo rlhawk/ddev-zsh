@@ -144,7 +144,7 @@ This directory contains its own `.gitignore` file, which ignores all generated s
 ```text
 .ddev/.zsh/
 ├── .gitignore
-└── history
+└── .zsh_history
 ```
 
 Because `.ddev/.zsh` manages its own ignored contents, it does **not** need to be added to `.git/info/exclude`.
@@ -182,7 +182,3 @@ rm .ddev/.zsh/.zsh_history
 ## Windows
 
 The current design targets DDEV running in WSL2. Native Windows/PowerShell DDEV has not been validated.
-
-## Before publishing
-
-Pin Antidote, Oh My Zsh, and Starship to tested releases or commit hashes and add amd64 and arm64 installation tests.
