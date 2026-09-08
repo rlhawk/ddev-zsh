@@ -15,29 +15,38 @@
 setup() {
   set -eu -o pipefail
 
-  export DIR="$(cd "$(dirname "$BATS_TEST_FILENAME")" >/dev/null 2>&1 && pwd)/.."
-  export TESTDIR="${HOME}/tmp/test-ddev-zsh"
-  export PROJNAME="test-ddev-zsh"
-  export DDEV_NON_INTERACTIVE=true
+  export GITHUB_REPO=rlhawk/ddev-zsh
 
-  mkdir -p "$TESTDIR"
-  ddev delete -Oy "$PROJNAME" >/dev/null 2>&1 || true
+  TEST_BREW_PREFIX="$(brew --prefix 2>/dev/null || true)"
+  export BATS_LIB_PATH="${BATS_LIB_PATH}:${TEST_BREW_PREFIX}/lib:/usr/lib/bats"
+  bats_load_library bats-assert
+  bats_load_library bats-file
+  bats_load_library bats-support
 
-  cd "$TESTDIR"
-  ddev config --project-name="$PROJNAME" --project-type=php --docroot=""
-  ddev start -y >/dev/null
+  export DIR="$(cd "$(dirname "${BATS_TEST_FILENAME}")/.." >/dev/null 2>&1 && pwd)"
+  export PROJNAME="test-$(basename "${GITHUB_REPO}")"
+  mkdir -p "${HOME}/tmp"
+  export TESTDIR="$(mktemp -d "${HOME}/tmp/${PROJNAME}.XXXXXX")"
+  export DDEV_NONINTERACTIVE=true
+  export DDEV_NO_INSTRUMENTATION=true
+  ddev delete -Oy "${PROJNAME}" >/dev/null 2>&1 || true
+  cd "${TESTDIR}"
+  run ddev config --project-name="${PROJNAME}" --project-tld=ddev.site
+  assert_success
+  run ddev start -y
+  assert_success
 }
 
 teardown() {
   set -eu -o pipefail
-
-  cd "$TESTDIR" || {
-    printf 'Unable to cd to %s\n' "$TESTDIR"
-    exit 1
-  }
-
-  ddev delete -Oy "$PROJNAME" >/dev/null 2>&1 || true
-  [ -n "$TESTDIR" ] && rm -rf "$TESTDIR"
+  ddev delete -Oy "${PROJNAME}" >/dev/null 2>&1
+  # Persist TESTDIR if running inside GitHub Actions. Useful for uploading test result artifacts
+  # See example at https://github.com/ddev/github-action-add-on-test#preserving-artifacts
+  if [ -n "${GITHUB_ENV:-}" ]; then
+    [ -e "${GITHUB_ENV:-}" ] && echo "TESTDIR=${HOME}/tmp/${PROJNAME}" >> "${GITHUB_ENV}"
+  else
+    [ "${TESTDIR}" != "" ] && rm -rf "${TESTDIR}"
+  fi
 }
 
 health_checks() {
@@ -100,7 +109,7 @@ health_checks() {
   cd "$TESTDIR"
   echo "# ddev add-on get rlhawk/ddev-zsh with project $PROJNAME in $TESTDIR ($(pwd))" >&3
 
-  ddev add-on get rlhawk/ddev-zsh
+  ddev add-on get "$GITHUB_REPO"
   ddev restart >/dev/null
   health_checks
 }
