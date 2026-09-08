@@ -1,0 +1,24 @@
+name: tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install DDEV
+        uses: ddev/github-action-setup-ddev@v1
+
+      - name: Install Bats
+        run: sudo apt-get update && sudo apt-get install -y bats
+
+      - name: Run add-on tests
+        run: bats tests/test.bats
